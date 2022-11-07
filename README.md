@@ -16,16 +16,6 @@ dependencies:
   flutter_yandex_games: 0.0.1
 ```
 
-Add this to your index.html. It's a temporary solution for data saving and will be removed later.
-
-```html
-<script>
-    function savePlayerData(player, data) {
-        player.o.setData(JSON.parse(data))
-    }
-</script>
-```
-
 If you get 404 error for js files in your game after uploading to Yandex, remove
 ```html
 <base href="/">

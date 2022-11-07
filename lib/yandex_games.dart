@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:js';
 import 'dart:js_util';
 
-import 'package:flutter/material.dart';
 import 'package:js/js.dart';
 
 void initializeYandexGamesPlugin() {}
@@ -56,20 +55,15 @@ class Player {
 
   String getUniqueID() => player.getUniqueID();
 
-  //data from yandex and data after setData is different. and sometimes has fields "o" and "_js\$_jsObject".
-  //todo fix that
   void setData(Map<dynamic, dynamic> data, {bool flush = false}) {
-    var encodedData = context['JSON'].callMethod('parse', [jsonEncode(data)]);
-    //debugPrint(encodedData);
-    context.callMethod("savePlayerData", [player, jsonEncode(data)]);
-    //player.setData(context['JSON'].callMethod('parse', [encodedData]), flush);
+    var newData = jsify(data);
+    player.setData(newData, flush);
   }
 
   Future<Map<dynamic, dynamic>> getData() async {
     JsObject data = await promiseToFuture<JsObject>(player.getData());
-    //todo fix this shit
     var map = mapify(data);
-    debugPrint("Map content: ${map.toString()}");
+    //Dart objects contain a JS object in 'o' field? Have to do this for now.
     if (map["o"] != null) {
       return map["o"];
     }
@@ -86,7 +80,7 @@ class YaGamesJs {
 class YaPlayer {
   external String getUniqueID();
 
-  external void setData(Object data, bool flush);
+  external void setData(JsObject data, bool flush);
 
   external JsObject getData();
 }
