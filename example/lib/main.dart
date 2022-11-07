@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_yandex_games/yandex_games.dart';
+import 'package:flutter_yandex_games/flutter_yandex_games.dart';
 
 void main() {
   runApp(const MyApp());
