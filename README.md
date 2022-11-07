@@ -10,6 +10,12 @@ Show Rewarded Ad.
 
 ## Installation
 
+Add this to your index.html
+
+```html
+<script src="https://yandex.ru/games/sdk/v2"></script>
+```
+
 ```yaml
 dependencies:
   ...
@@ -18,7 +24,7 @@ dependencies:
 
 If you get 404 error for js files in your game after uploading to Yandex, remove
 ```html
-<base href="/">
+<base href="$FLUTTER_BASE_HREF">
 ```
 from your index.html
 

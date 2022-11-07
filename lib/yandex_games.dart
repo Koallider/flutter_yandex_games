@@ -8,7 +8,6 @@ import 'dart:js_util';
 import 'package:js/js.dart';
 
 class YandexGames {
-
   /// Initializes the Yandex Games sdk and gets the player object.
   /// Call this on start of your application.
   static Future<bool> init() async {
@@ -37,13 +36,12 @@ class YandexGames {
       required Function onClose,
       required Function onError}) {
     _yaSdk.adv.showRewardedVideo(_ShowRewardedVideoOptions(
-      callbacks: _RewardedVideoCallbacks(
-        onOpen: allowInterop<Function>(onOpen),
-        onRewarded: allowInterop<Function>(onRewarded),
-        onClose: allowInterop<Function>(onClose),
-        onError: allowInterop<Function>(onError),
-      )
-    ));
+        callbacks: _RewardedVideoCallbacks(
+      onOpen: allowInterop<Function>(onOpen),
+      onRewarded: allowInterop<Function>(onRewarded),
+      onClose: allowInterop<Function>(onClose),
+      onError: allowInterop<Function>(onError),
+    )));
   }
 }
 
@@ -124,7 +122,8 @@ class _GetPlayerOptions {
 @anonymous
 @JS()
 class _ShowRewardedVideoOptions {
-  external factory _ShowRewardedVideoOptions({_RewardedVideoCallbacks callbacks});
+  external factory _ShowRewardedVideoOptions(
+      {_RewardedVideoCallbacks callbacks});
 }
 
 @anonymous
@@ -132,7 +131,7 @@ class _ShowRewardedVideoOptions {
 class _RewardedVideoCallbacks {
   external factory _RewardedVideoCallbacks(
       {Function onOpen,
-        Function onRewarded,
-        Function onClose,
-        Function onError});
+      Function onRewarded,
+      Function onClose,
+      Function onError});
 }
