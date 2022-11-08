@@ -22,7 +22,7 @@ Add this to your index.html
 ```yaml
 dependencies:
   ...
-  flutter_yandex_games: 0.0.1
+  flutter_yandex_games: 0.0.2
 ```
 
 If you get 404 error for js files in your game after uploading to Yandex, remove
@@ -43,7 +43,7 @@ await YandexGames.init();
 
 ```dart
 var player = YandexGames.getPlayer();
-var data = player.getData()
+var data = await player.getData();
 ```
 
 ### Set Player Data
@@ -56,7 +56,14 @@ player.setData({"gold": 100});
 ### Show Fullscreen Ad
 
 ```dart
-YandexGames.showFullscreenAd()
+YandexGames.showFullscreenAd(
+  onClose: (wasShown){
+    
+  },
+  onError: (error){
+    //Show error
+  },
+);
 ```
 
 ### Show Rewarded Video Ad
@@ -72,7 +79,7 @@ YandexGames.showRewardedVideoAd(
   onClose: (){
     debugPrint("rewardedVideo onClosed");
   },
-  onError: (){
+  onError: (error{
     //Show error
   },
 );
