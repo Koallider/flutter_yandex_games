@@ -25,22 +25,26 @@ class YandexGames {
   }
 
   ///Displays Fullscreen AD
-  static void showFullscreenAd() {
-    _yaSdk.adv.showFullscreenAdv();
+  static void showFullscreenAd(
+      {Function(bool wasShown)? onClose, Function(dynamic error)? onError}) {
+    _yaSdk.adv.showFullscreenAdv(_ShowFullscreenAdOptions(
+        callbacks: _FullscreenAdCallbacks(
+            onClose: _wrapCallback<Function>(onClose),
+            onError: _wrapCallback<Function>(onError))));
   }
 
   /// Displays Rewarded Video AD and calls callback functions on Ad events
   static void showRewardedVideoAd(
-      {required Function onOpen,
-      required Function onRewarded,
-      required Function onClose,
-      required Function onError}) {
+      {Function? onOpen,
+      Function? onRewarded,
+      Function? onClose,
+      Function(dynamic error)? onError}) {
     _yaSdk.adv.showRewardedVideo(_ShowRewardedVideoOptions(
         callbacks: _RewardedVideoCallbacks(
-      onOpen: allowInterop<Function>(onOpen),
-      onRewarded: allowInterop<Function>(onRewarded),
-      onClose: allowInterop<Function>(onClose),
-      onError: allowInterop<Function>(onError),
+      onOpen: _wrapCallback<Function>(onOpen),
+      onRewarded: _wrapCallback<Function>(onRewarded),
+      onClose: _wrapCallback<Function>(onClose),
+      onError: _wrapCallback<Function>(onError),
     )));
   }
 }
@@ -78,6 +82,14 @@ class Player {
   }
 }
 
+///Wraps callbacks so they can be called from JS
+F? _wrapCallback<F extends Function>(F? f) {
+  if (f != null) {
+    return allowInterop<F>(f);
+  }
+  return f;
+}
+
 ///Converts JS object to Map
 Map _mapify(JsObject obj) {
   return jsonDecode(context['JSON'].callMethod('stringify', [obj]));
@@ -106,7 +118,7 @@ class _YaSdk {
 
 @JS("Adv")
 class _YaAdv {
-  external void showFullscreenAdv();
+  external void showFullscreenAdv(_ShowFullscreenAdOptions options);
 
   external void showRewardedVideo(_ShowRewardedVideoOptions options);
 }
@@ -128,10 +140,23 @@ class _ShowRewardedVideoOptions {
 
 @anonymous
 @JS()
+class _ShowFullscreenAdOptions {
+  external factory _ShowFullscreenAdOptions({_FullscreenAdCallbacks callbacks});
+}
+
+@anonymous
+@JS()
 class _RewardedVideoCallbacks {
   external factory _RewardedVideoCallbacks(
-      {Function onOpen,
-      Function onRewarded,
-      Function onClose,
-      Function onError});
+      {Function? onOpen,
+      Function? onRewarded,
+      Function? onClose,
+      Function? onError});
+}
+
+@anonymous
+@JS()
+class _FullscreenAdCallbacks {
+  external factory _FullscreenAdCallbacks(
+      {Function? onClose, Function? onError});
 }

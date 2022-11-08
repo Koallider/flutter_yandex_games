@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Yandex Games Plugin Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -67,25 +67,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void showFullscreenAd(){
-    YandexGames.showFullscreenAd();
+    YandexGames.showFullscreenAd(
+      onClose: (wasShown){
+        debugPrint("onClose: $wasShown");
+      },
+      onError: (error){
+        debugPrint("onError message: $error");
+        setState(() {
+          status = "Fullscreen Ad Not Loaded";
+        });
+      },
+    );
   }
 
   void showRewardedVideoAd() {
     YandexGames.showRewardedVideoAd(
       onOpen: (){
+        debugPrint("onOpen");
         setState(() {
-          status = "Rewarded Video Open";
+          status = "Rewarded Video Opened";
         });
       },
       onRewarded: (){
+        debugPrint("onRewarded");
         setState(() {
           status = "Rewarded Video Rewarded";
         });
       },
       onClose: (){
-
+        debugPrint("onClose");
       },
-      onError: (){
+      onError: (error){
+        debugPrint("onError message: $error");
         setState(() {
           status = "Rewarded Video Not Loaded";
         });
