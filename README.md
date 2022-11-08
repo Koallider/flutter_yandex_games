@@ -2,6 +2,9 @@ Flutter Web plugin for Yandex Games Sdk.
 
 ## Features
 
+This is the minimal sufficient level of features I need for My project. 
+Feel free to contribute. Or open an issue if you need more features.
+
 Player data save/load.
 Show Fullscreen Ad.
 Show Rewarded Ad.
