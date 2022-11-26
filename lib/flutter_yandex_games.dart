@@ -47,6 +47,10 @@ class YandexGames {
       onError: _wrapCallback<Function>(onError),
     )));
   }
+
+  static Future<CanReviewResponse> canReview() async {
+    return promiseToFuture<CanReviewResponse>(_yaSdk.feedback.canReview());
+  }
 }
 
 class Player {
@@ -114,6 +118,8 @@ class _YaSdk {
   external Object getPlayer(_GetPlayerOptions options);
 
   external _YaAdv get adv;
+
+  external _YaFeedback get feedback;
 }
 
 @JS("Adv")
@@ -121,6 +127,11 @@ class _YaAdv {
   external void showFullscreenAdv(_ShowFullscreenAdOptions options);
 
   external void showRewardedVideo(_ShowRewardedVideoOptions options);
+}
+
+@JS("Feedback")
+class _YaFeedback {
+  external JsObject canReview();
 }
 
 @anonymous
@@ -159,4 +170,13 @@ class _RewardedVideoCallbacks {
 class _FullscreenAdCallbacks {
   external factory _FullscreenAdCallbacks(
       {Function? onClose, Function? onError});
+}
+
+@anonymous
+@JS()
+class CanReviewResponse{
+  external bool get value;
+  external String get reason;
+
+  external factory CanReviewResponse({bool value, bool reason});
 }
