@@ -79,7 +79,7 @@ YandexGames.showRewardedVideoAd(
   onClose: (){
     debugPrint("rewardedVideo onClosed");
   },
-  onError: (error{
+  onError: (error){
     //Show error
   },
 );
