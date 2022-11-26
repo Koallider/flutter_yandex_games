@@ -61,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           TextButton(onPressed: initFinished ? savePlayerData : null, child: const Text("Save Status To Player Data")),
           TextButton(onPressed: initFinished ? getPlayerData : null, child: const Text("Load Player Data")),
+
+          TextButton(onPressed: initFinished ? canReview : null, child: const Text("Call can review")),
+          TextButton(onPressed: initFinished ? requestReview : null, child: const Text("Request Review")),
         ],
       ),
     );
@@ -114,6 +117,22 @@ class _MyHomePageState extends State<MyHomePage> {
     YandexGames.getPlayer().getData().then((value) {
       setState(() {
         status = "Player Data Received: ${jsonEncode(value)}";
+      });
+    });
+  }
+
+  void canReview(){
+    YandexGames.canReview().then((response) {
+      setState(() {
+        status = "Can review value: ${response.value}, reason: ${response.reason}";
+      });
+    });
+  }
+
+  void requestReview(){
+    YandexGames.requestReview().then((response) {
+      setState(() {
+        status = "Requested review. feedbackSent: ${response.feedbackSent}";
       });
     });
   }
