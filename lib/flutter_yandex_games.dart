@@ -48,8 +48,25 @@ class YandexGames {
     )));
   }
 
+  /// Asks sdk if [requestReview] can be called
+  ///
+  /// Call this before you call [requestReview]
+  /// If [response.value] is true you can call requestReview.
+  /// If it's false. [response.reason] will have information
+  /// why it can't be called.
+  ///
+  /// More info:
+  /// https://yandex.ru/dev/games/doc/dg/sdk/sdk-review.html
   static Future<CanReviewResponse> canReview() async {
     return promiseToFuture<CanReviewResponse>(_yaSdk.feedback.canReview());
+  }
+
+  /// Displays review dialog.
+  ///
+  /// Returns [feedbackSent] true if user reviewed the game.
+  /// And false if user closed the review dialog.
+  static Future<RequestReviewResponse> requestReview() async {
+    return promiseToFuture<RequestReviewResponse>(_yaSdk.feedback.requestReview());
   }
 }
 
@@ -132,6 +149,8 @@ class _YaAdv {
 @JS("Feedback")
 class _YaFeedback {
   external JsObject canReview();
+
+  external JsObject requestReview();
 }
 
 @anonymous
@@ -177,6 +196,10 @@ class _FullscreenAdCallbacks {
 class CanReviewResponse{
   external bool get value;
   external String get reason;
+}
 
-  external factory CanReviewResponse({bool value, bool reason});
+@anonymous
+@JS()
+class RequestReviewResponse{
+  external bool get feedbackSent;
 }
