@@ -84,3 +84,13 @@ YandexGames.showRewardedVideoAd(
   },
 );
 ```
+
+### Ask review
+
+```dart
+YandexGames.canReview().then((response) {
+  if(response.value){
+    YandexGames.requestReview();
+  }
+});
+```
