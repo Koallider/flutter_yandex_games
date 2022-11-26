@@ -66,7 +66,8 @@ class YandexGames {
   /// Returns [feedbackSent] true if user reviewed the game.
   /// And false if user closed the review dialog.
   static Future<RequestReviewResponse> requestReview() async {
-    return promiseToFuture<RequestReviewResponse>(_yaSdk.feedback.requestReview());
+    return promiseToFuture<RequestReviewResponse>(
+        _yaSdk.feedback.requestReview());
   }
 }
 
@@ -193,13 +194,13 @@ class _FullscreenAdCallbacks {
 
 @anonymous
 @JS()
-class CanReviewResponse{
+class CanReviewResponse {
   external bool get value;
   external String get reason;
 }
 
 @anonymous
 @JS()
-class RequestReviewResponse{
+class RequestReviewResponse {
   external bool get feedbackSent;
 }
