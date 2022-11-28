@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Added Player Authorization
+
 ## 0.0.3
 
 - Added Request Review feature 

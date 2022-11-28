@@ -18,7 +18,7 @@ class YandexGames {
 
   static Future<Player> _loadPlayer() async {
     return Player(await promiseToFuture(
-      _yaSdk.getPlayer(_GetPlayerOptions(scopes: false))));
+        _yaSdk.getPlayer(_GetPlayerOptions(scopes: false))));
   }
 
   static late _YaSdk _yaSdk;
@@ -116,7 +116,7 @@ class Player {
   /// Returns the player authorization mode.
   ///
   /// Yandex Games SDK returns mode 'lite' if player is not authorized.
-  bool isAuthorized(){
+  bool isAuthorized() {
     return player.getMode() != 'lite';
   }
 }
@@ -165,7 +165,6 @@ class _YaSdk {
 class _YaAuth {
   external JsObject openAuthDialog();
 }
-
 
 @JS("Adv")
 class _YaAdv {
