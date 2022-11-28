@@ -102,6 +102,13 @@ class Player {
     }
     return map;
   }
+
+  /// Returns the player authorization mode.
+  ///
+  /// Yandex Games SDK returns mode 'lite' if player is not authorized.
+  bool isAuthorized(){
+    return player.getMode() != 'lite';
+  }
 }
 
 ///Wraps callbacks so they can be called from JS
@@ -129,6 +136,8 @@ class _YaPlayer {
   external void setData(JsObject data, bool flush);
 
   external JsObject getData();
+
+  external String getMode();
 }
 
 @JS("YaSdk")
