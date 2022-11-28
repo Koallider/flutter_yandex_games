@@ -30,7 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   String status = "Initializing...";
 
   bool initFinished = false;
@@ -40,14 +39,13 @@ class _MyHomePageState extends State<MyHomePage> {
     initYandexGames();
   }
 
-  void initYandexGames(){
-    YandexGames.init().then((value){
+  void initYandexGames() {
+    YandexGames.init().then((value) {
       setState(() {
         status = "Yandex Games Sdk Init Successful";
         initFinished = true;
       });
     });
-
   }
 
   @override
@@ -56,25 +54,41 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Text(status),
-          TextButton(onPressed: initFinished ? showFullscreenAd : null, child: const Text("Show Fullscreen Ad")),
-          TextButton(onPressed: initFinished ? showRewardedVideoAd : null, child: const Text("Show Rewarded Video Ad")),
-
-          TextButton(onPressed: initFinished ? savePlayerData : null, child: const Text("Save Status To Player Data")),
-          TextButton(onPressed: initFinished ? getPlayerData : null, child: const Text("Load Player Data")),
-
-          TextButton(onPressed: initFinished ? canReview : null, child: const Text("Call can review")),
-          TextButton(onPressed: initFinished ? requestReview : null, child: const Text("Request Review")),
+          TextButton(
+              onPressed: initFinished ? showFullscreenAd : null,
+              child: const Text("Show Fullscreen Ad")),
+          TextButton(
+              onPressed: initFinished ? showRewardedVideoAd : null,
+              child: const Text("Show Rewarded Video Ad")),
+          TextButton(
+              onPressed: initFinished ? savePlayerData : null,
+              child: const Text("Save Status To Player Data")),
+          TextButton(
+              onPressed: initFinished ? getPlayerData : null,
+              child: const Text("Load Player Data")),
+          TextButton(
+              onPressed: initFinished ? canReview : null,
+              child: const Text("Call can review")),
+          TextButton(
+              onPressed: initFinished ? requestReview : null,
+              child: const Text("Request Review")),
+          TextButton(
+              onPressed: initFinished ? isPlayerAuthorized : null,
+              child: const Text("Check if player is Authorized")),
+          TextButton(
+              onPressed: initFinished ? openAuthDialog : null,
+              child: const Text("Open Auth Dialog")),
         ],
       ),
     );
   }
 
-  void showFullscreenAd(){
+  void showFullscreenAd() {
     YandexGames.showFullscreenAd(
-      onClose: (wasShown){
+      onClose: (wasShown) {
         debugPrint("onClose: $wasShown");
       },
-      onError: (error){
+      onError: (error) {
         debugPrint("onError message: $error");
         setState(() {
           status = "Fullscreen Ad Not Loaded";
@@ -85,22 +99,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void showRewardedVideoAd() {
     YandexGames.showRewardedVideoAd(
-      onOpen: (){
+      onOpen: () {
         debugPrint("onOpen");
         setState(() {
           status = "Rewarded Video Opened";
         });
       },
-      onRewarded: (){
+      onRewarded: () {
         debugPrint("onRewarded");
         setState(() {
           status = "Rewarded Video Rewarded";
         });
       },
-      onClose: (){
+      onClose: () {
         debugPrint("onClose");
       },
-      onError: (error){
+      onError: (error) {
         debugPrint("onError message: $error");
         setState(() {
           status = "Rewarded Video Not Loaded";
@@ -109,11 +123,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void savePlayerData(){
+  void savePlayerData() {
     YandexGames.getPlayer().setData({"status": status});
   }
 
-  void getPlayerData(){
+  void getPlayerData() {
     YandexGames.getPlayer().getData().then((value) {
       setState(() {
         status = "Player Data Received: ${jsonEncode(value)}";
@@ -121,18 +135,37 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void canReview(){
+  void canReview() {
     YandexGames.canReview().then((response) {
       setState(() {
-        status = "Can review value: ${response.value}, reason: ${response.reason}";
+        status =
+            "Can review value: ${response.value}, reason: ${response.reason}";
       });
     });
   }
 
-  void requestReview(){
+  void requestReview() {
     YandexGames.requestReview().then((response) {
       setState(() {
         status = "Requested review. feedbackSent: ${response.feedbackSent}";
+      });
+    });
+  }
+
+  void isPlayerAuthorized() {
+    setState(() {
+      status = "Player Authorized: ${YandexGames.getPlayer().isAuthorized()}";
+    });
+  }
+
+  void openAuthDialog() {
+    YandexGames.openAuthDialog().then((value) {
+      setState(() {
+        status = "Player Authorization Success";
+      });
+    }, onError: (error) {
+      setState(() {
+        status = "Player Authorization Fail $error";
       });
     });
   }
