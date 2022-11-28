@@ -94,3 +94,19 @@ YandexGames.canReview().then((response) {
   }
 });
 ```
+
+### Player Authorization
+
+#### Check if player is Authorized:
+```dart
+YandexGames.getPlayer().isAuthorized()
+```
+
+#### Open auth dialog:
+```dart
+YandexGames.openAuthDialog().then((_) {
+  //Player Authorization Success
+}, onError: (error) {
+  //Player Authorization Fail
+});
+```
