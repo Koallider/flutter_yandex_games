@@ -22,7 +22,7 @@ Add this to your index.html
 ```yaml
 dependencies:
   ...
-  flutter_yandex_games: 0.0.3
+  flutter_yandex_games: 0.0.4
 ```
 
 If you get 404 error for js files in your game after uploading to Yandex, remove
@@ -92,5 +92,21 @@ YandexGames.canReview().then((response) {
   if(response.value){
     YandexGames.requestReview();
   }
+});
+```
+
+### Player Authorization
+
+#### Check if player is Authorized:
+```dart
+YandexGames.getPlayer().isAuthorized()
+```
+
+#### Open auth dialog:
+```dart
+YandexGames.openAuthDialog().then((_) {
+  //Player Authorization Success
+}, onError: (error) {
+  //Player Authorization Fail
 });
 ```
