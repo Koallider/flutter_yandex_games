@@ -12,9 +12,13 @@ class YandexGames {
   /// Call this on start of your application.
   static Future<bool> init() async {
     _yaSdk = await promiseToFuture(_YaGamesJs.init());
-    _player = Player(await promiseToFuture(
-        _yaSdk.getPlayer(_GetPlayerOptions(scopes: false))));
+    _player = await _loadPlayer();
     return true;
+  }
+
+  static Future<Player> _loadPlayer() async {
+    return Player(await promiseToFuture(
+      _yaSdk.getPlayer(_GetPlayerOptions(scopes: false))));
   }
 
   static late _YaSdk _yaSdk;
@@ -68,6 +72,12 @@ class YandexGames {
   static Future<RequestReviewResponse> requestReview() async {
     return promiseToFuture<RequestReviewResponse>(
         _yaSdk.feedback.requestReview());
+  }
+
+  static Future<bool> openAuthDialog() async {
+    await promiseToFuture(_yaSdk.auth.openAuthDialog());
+    _player = await _loadPlayer();
+    return true;
   }
 }
 
@@ -146,8 +156,16 @@ class _YaSdk {
 
   external _YaAdv get adv;
 
+  external _YaAuth get auth;
+
   external _YaFeedback get feedback;
 }
+
+@JS("Auth")
+class _YaAuth {
+  external JsObject openAuthDialog();
+}
+
 
 @JS("Adv")
 class _YaAdv {
