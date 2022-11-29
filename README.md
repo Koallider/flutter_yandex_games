@@ -22,7 +22,7 @@ Add this to your index.html
 ```yaml
 dependencies:
   ...
-  flutter_yandex_games: 0.0.4
+  flutter_yandex_games: 0.0.5
 ```
 
 If you get 404 error for js files in your game after uploading to Yandex, remove
