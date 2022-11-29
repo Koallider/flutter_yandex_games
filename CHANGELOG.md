@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Added access to Environment variables
+
 ## 0.0.4
 
 - Added Player Authorization

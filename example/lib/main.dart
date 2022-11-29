@@ -78,6 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
           TextButton(
               onPressed: initFinished ? openAuthDialog : null,
               child: const Text("Open Auth Dialog")),
+          TextButton(
+              onPressed: initFinished ? getEnvironmentVariables : null,
+              child: const Text("Get Environment variables")),
         ],
       ),
     );
@@ -167,6 +170,13 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         status = "Player Authorization Fail $error";
       });
+    });
+  }
+
+  void getEnvironmentVariables(){
+    setState(() {
+      status = "Env App id: ${YandexGames.environment.app.id}, "
+          "lang: ${YandexGames.environment.i18n.lang}";
     });
   }
 }
