@@ -74,10 +74,15 @@ class YandexGames {
         _yaSdk.feedback.requestReview());
   }
 
+  /// Opens Authentication dialog.
   static Future<bool> openAuthDialog() async {
     await promiseToFuture(_yaSdk.auth.openAuthDialog());
     _player = await _loadPlayer();
     return true;
+  }
+
+  static Environment get environment {
+    return _yaSdk.environment;
   }
 }
 
@@ -159,6 +164,8 @@ class _YaSdk {
   external _YaAuth get auth;
 
   external _YaFeedback get feedback;
+
+  external Environment get environment;
 }
 
 @JS("Auth")
@@ -218,15 +225,55 @@ class _FullscreenAdCallbacks {
       {Function? onClose, Function? onError});
 }
 
-@anonymous
 @JS()
 class CanReviewResponse {
   external bool get value;
   external String get reason;
 }
 
-@anonymous
 @JS()
 class RequestReviewResponse {
   external bool get feedbackSent;
+}
+
+/// Environment variables
+///
+/// More data https://yandex.ru/dev/games/doc/dg/sdk/sdk-environment.html
+@JS()
+class Environment {
+  external App get app;
+  external Browser get browser;
+  external Locale get i18n;
+
+  /// Custom payload from the game URL.
+  ///
+  /// https://yandex.ru/games/app/123?payload=test
+  external String? get payload;
+}
+
+/// Locale related environment variables
+@JS()
+class Locale {
+  /// Yandex games interface language in ISO 639-1 format.
+  /// Use this property to localize your game.
+  external String get lang;
+
+  /// Top level domain value.
+  ///
+  /// E.g. for the international Yandex Games page the value will be 'com'.
+  external String get tld;
+}
+
+/// App related environment variables
+@JS()
+class App {
+  /// Game ID
+  external String get id;
+}
+
+/// Browser related environment variables
+@JS()
+class Browser {
+  /// Browser language in ISO 639-1 format
+  external String get lang;
 }
