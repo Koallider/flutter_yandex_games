@@ -31,6 +31,8 @@ class YaSdk {
   external YaFeedback get feedback;
 
   external Environment get environment;
+
+  external Shortcut get shortcut;
 }
 
 @JS("Auth")
@@ -50,6 +52,13 @@ class YaFeedback {
   external JsObject canReview();
 
   external JsObject requestReview();
+}
+
+@JS()
+class Shortcut {
+  external JsObject canShowPrompt();
+
+  external JsObject showPrompt();
 }
 
 @anonymous
@@ -99,6 +108,16 @@ class CanReviewResponse {
 @JS()
 class RequestReviewResponse {
   external bool get feedbackSent;
+}
+
+@JS()
+class CanShowPromptResponse {
+  external bool get canShow;
+}
+
+@JS()
+class ShowPromptResponse {
+  external String get outcome;
 }
 
 /// Environment variables

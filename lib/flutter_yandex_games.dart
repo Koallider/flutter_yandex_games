@@ -78,6 +78,30 @@ class YandexGames {
     return true;
   }
 
+  /// Checks if it's possible to add a shortcut.
+  static Future<bool> canShowShortcutPrompt() async {
+    var response = await promiseToFuture<CanShowPromptResponse>(
+      _yaSdk.shortcut.canShowPrompt()
+    );
+    return response.canShow;
+  }
+
+  /// Shows a prompt to add a shortcut to desktop.
+  ///
+  /// Use [canShowShortcutPrompt] before calling this method, because
+  /// it's not always possible to add a shortcut.
+  ///
+  /// Will return true in case of the accepted prompt.
+  static Future<bool> showShortcutPrompt() async {
+    var response = await promiseToFuture<ShowPromptResponse>(
+        _yaSdk.shortcut.showPrompt()
+    );
+    return response.outcome == "accepted";
+  }
+
+  /// Contains Yandex Games environment variables.
+  ///
+  /// More details: https://yandex.com/dev/games/doc/dg/sdk/sdk-environment.html
   static Environment get environment {
     return _yaSdk.environment;
   }
