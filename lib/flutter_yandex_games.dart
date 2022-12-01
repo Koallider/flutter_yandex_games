@@ -81,8 +81,7 @@ class YandexGames {
   /// Checks if it's possible to add a shortcut.
   static Future<bool> canShowShortcutPrompt() async {
     var response = await promiseToFuture<CanShowPromptResponse>(
-      _yaSdk.shortcut.canShowPrompt()
-    );
+        _yaSdk.shortcut.canShowPrompt());
     return response.canShow;
   }
 
@@ -93,9 +92,8 @@ class YandexGames {
   ///
   /// Will return true in case of the accepted prompt.
   static Future<bool> showShortcutPrompt() async {
-    var response = await promiseToFuture<ShowPromptResponse>(
-        _yaSdk.shortcut.showPrompt()
-    );
+    var response =
+        await promiseToFuture<ShowPromptResponse>(_yaSdk.shortcut.showPrompt());
     return response.outcome == "accepted";
   }
 

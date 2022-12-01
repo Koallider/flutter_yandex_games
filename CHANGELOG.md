@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Added methods to create a desktop shortcut
+
 ## 0.0.5
 
 - Added access to Environment variables
