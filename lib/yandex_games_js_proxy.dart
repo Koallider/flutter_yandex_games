@@ -31,6 +31,8 @@ class YaSdk {
   external YaFeedback get feedback;
 
   external Environment get environment;
+
+  external Shortcut get shortcut;
 }
 
 @JS("Auth")
@@ -52,6 +54,13 @@ class YaFeedback {
   external JsObject requestReview();
 }
 
+@JS()
+class Shortcut {
+  external JsObject canShowPrompt();
+
+  external JsObject showPrompt();
+}
+
 @anonymous
 @JS()
 class GetPlayerOptions {
@@ -63,8 +72,7 @@ class GetPlayerOptions {
 @anonymous
 @JS()
 class ShowRewardedVideoOptions {
-  external factory ShowRewardedVideoOptions(
-      {RewardedVideoCallbacks callbacks});
+  external factory ShowRewardedVideoOptions({RewardedVideoCallbacks callbacks});
 }
 
 @anonymous
@@ -78,9 +86,9 @@ class ShowFullscreenAdOptions {
 class RewardedVideoCallbacks {
   external factory RewardedVideoCallbacks(
       {Function? onOpen,
-        Function? onRewarded,
-        Function? onClose,
-        Function? onError});
+      Function? onRewarded,
+      Function? onClose,
+      Function? onError});
 }
 
 @anonymous
@@ -99,6 +107,16 @@ class CanReviewResponse {
 @JS()
 class RequestReviewResponse {
   external bool get feedbackSent;
+}
+
+@JS()
+class CanShowPromptResponse {
+  external bool get canShow;
+}
+
+@JS()
+class ShowPromptResponse {
+  external String get outcome;
 }
 
 /// Environment variables

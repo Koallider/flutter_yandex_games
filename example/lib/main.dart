@@ -81,6 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
           TextButton(
               onPressed: initFinished ? getEnvironmentVariables : null,
               child: const Text("Get Environment variables")),
+          TextButton(
+              onPressed: initFinished ? checkShortcutPrompt : null,
+              child: const Text("Check if can show shortcut prompt")),
+          TextButton(
+              onPressed: initFinished ? showShortcutPrompt : null,
+              child: const Text("Show shortcut prompt")),
         ],
       ),
     );
@@ -177,6 +183,22 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       status = "Env App id: ${YandexGames.environment.app.id}, "
           "lang: ${YandexGames.environment.i18n.lang}";
+    });
+  }
+
+  void checkShortcutPrompt(){
+    YandexGames.canShowShortcutPrompt().then((value){
+      setState(() {
+        status = "Can show prompt: $value";
+      });
+    });
+  }
+
+  void showShortcutPrompt(){
+    YandexGames.canShowShortcutPrompt().then((value){
+      setState(() {
+        status = "Prompt shown: $value";
+      });
     });
   }
 }
