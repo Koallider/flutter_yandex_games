@@ -33,6 +33,26 @@ class YaSdk {
   external Environment get environment;
 
   external Shortcut get shortcut;
+
+  external Features get features;
+}
+
+@JS("Features")
+class Features {
+  external LoadingAPIImpl? get LoadingAPI;
+  external GameplayAPIImpl? get GameplayAPI;
+}
+
+@JS("LoadingAPI")
+class LoadingAPIImpl {
+  external void ready();
+}
+
+@JS("GameplayAPI")
+class GameplayAPIImpl {
+  external void stop();
+
+  external void start();
 }
 
 @JS("Auth")
