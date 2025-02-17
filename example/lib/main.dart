@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Yandex Games Plugin Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Roboto"
       ),
       home: const MyHomePage(),
     );
@@ -44,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         status = "Yandex Games Sdk Init Successful";
         initFinished = true;
+        YandexGames.loadingApi.ready();
       });
     });
   }
@@ -51,53 +53,58 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text(status),
-          TextButton(
-              onPressed: initFinished ? showFullscreenAd : null,
-              child: const Text("Show Fullscreen Ad")),
-          TextButton(
-              onPressed: initFinished ? showRewardedVideoAd : null,
-              child: const Text("Show Rewarded Video Ad")),
-          TextButton(
-              onPressed: initFinished ? savePlayerData : null,
-              child: const Text("Save Status To Player Data")),
-          TextButton(
-              onPressed: initFinished ? getPlayerData : null,
-              child: const Text("Load Player Data")),
-          TextButton(
-              onPressed: initFinished ? canReview : null,
-              child: const Text("Call can review")),
-          TextButton(
-              onPressed: initFinished ? requestReview : null,
-              child: const Text("Request Review")),
-          TextButton(
-              onPressed: initFinished ? isPlayerAuthorized : null,
-              child: const Text("Check if player is Authorized")),
-          TextButton(
-              onPressed: initFinished ? openAuthDialog : null,
-              child: const Text("Open Auth Dialog")),
-          TextButton(
-              onPressed: initFinished ? getEnvironmentVariables : null,
-              child: const Text("Get Environment variables")),
-          TextButton(
-              onPressed: initFinished ? checkShortcutPrompt : null,
-              child: const Text("Check if can show shortcut prompt")),
-          TextButton(
-              onPressed: initFinished ? showShortcutPrompt : null,
-              child: const Text("Show shortcut prompt")),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(status),
+            TextButton(
+                onPressed: initFinished ? showFullscreenAd : null,
+                child: const Text("Show Fullscreen Ad")),
+            TextButton(
+                onPressed: initFinished ? showRewardedVideoAd : null,
+                child: const Text("Show Rewarded Video Ad")),
+            TextButton(
+                onPressed: initFinished ? savePlayerData : null,
+                child: const Text("Save Status To Player Data")),
+            TextButton(
+                onPressed: initFinished ? getPlayerData : null,
+                child: const Text("Load Player Data")),
+            TextButton(
+                onPressed: initFinished ? canReview : null,
+                child: const Text("Call can review")),
+            TextButton(
+                onPressed: initFinished ? requestReview : null,
+                child: const Text("Request Review")),
+            TextButton(
+                onPressed: initFinished ? isPlayerAuthorized : null,
+                child: const Text("Check if player is Authorized")),
+            TextButton(
+                onPressed: initFinished ? openAuthDialog : null,
+                child: const Text("Open Auth Dialog")),
+            TextButton(
+                onPressed: initFinished ? getEnvironmentVariables : null,
+                child: const Text("Get Environment variables")),
+            TextButton(
+                onPressed: initFinished ? checkShortcutPrompt : null,
+                child: const Text("Check if can show shortcut prompt")),
+            TextButton(
+                onPressed: initFinished ? showShortcutPrompt : null,
+                child: const Text("Show shortcut prompt")),
+          ],
+        ),
       ),
     );
   }
 
   void showFullscreenAd() {
+    YandexGames.gameplayApi.stop();
     YandexGames.showFullscreenAd(
       onClose: (wasShown) {
+        YandexGames.gameplayApi.start();
         debugPrint("onClose: $wasShown");
       },
       onError: (error) {
+        YandexGames.gameplayApi.start();
         debugPrint("onError message: $error");
         setState(() {
           status = "Fullscreen Ad Not Loaded";
@@ -109,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void showRewardedVideoAd() {
     YandexGames.showRewardedVideoAd(
       onOpen: () {
+        YandexGames.gameplayApi.stop();
         debugPrint("onOpen");
         setState(() {
           status = "Rewarded Video Opened";
@@ -121,9 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       },
       onClose: () {
+        YandexGames.gameplayApi.start();
         debugPrint("onClose");
       },
       onError: (error) {
+        YandexGames.gameplayApi.start();
         debugPrint("onError message: $error");
         setState(() {
           status = "Rewarded Video Not Loaded";

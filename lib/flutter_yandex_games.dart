@@ -10,6 +10,8 @@ class YandexGames {
   static Future<bool> init() async {
     _yaSdk = await promiseToFuture(YaGamesJs.init());
     _player = await _loadPlayer();
+    _loadingApi = LoadingApi(_yaSdk);
+    _gameplayApi = GameplayApi(_yaSdk);
     return true;
   }
 
@@ -20,10 +22,15 @@ class YandexGames {
 
   static late YaSdk _yaSdk;
   static late Player _player;
+  static late LoadingApi _loadingApi;
+  static late GameplayApi _gameplayApi;
 
   static Player getPlayer() {
     return _player;
   }
+
+  static LoadingApi get loadingApi => _loadingApi;
+  static GameplayApi get gameplayApi => _gameplayApi;
 
   ///Displays Fullscreen AD
   static void showFullscreenAd(
@@ -142,5 +149,43 @@ class Player {
   /// Yandex Games SDK returns mode 'lite' if player is not authorized.
   bool isAuthorized() {
     return player.getMode() != 'lite';
+  }
+}
+
+class LoadingApi {
+  YaSdk _yaSdk;
+
+  LoadingApi(this._yaSdk);
+
+  /// Method should be called when all resources are loaded and the game is ready for user interaction.
+  void ready() {
+    _yaSdk.features.LoadingAPI?.ready();
+  }
+}
+
+class GameplayApi {
+  YaSdk _yaSdk;
+
+  GameplayApi(this._yaSdk);
+
+  /// method should be called in cases where the player starts or resumes gameplay:
+  /// - Starting a level;
+  /// - Closing a menu;
+  /// - Unpausing the game;
+  /// - Resuming the game after an advertisement;
+  /// - Returning to the current browser tab.
+  /// - Ensure that after sending the GameplayAPI.start() event, the gameplay is immediately started.
+  void start() {
+    _yaSdk.features.GameplayAPI?.start();
+  }
+
+  /// Method should be called in cases where the player pauses or ends gameplay:
+  /// - Completing a level or losing;
+  /// - Opening a menu;
+  /// - Pausing the game;
+  /// - Displaying fullscreen or rewarded advertisements;
+  /// - Switching to another browser tab.
+  void stop() {
+    _yaSdk.features.GameplayAPI?.stop();
   }
 }

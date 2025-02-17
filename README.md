@@ -16,13 +16,13 @@ Show Rewarded Ad.
 Add this to your index.html
 
 ```html
-<script src="https://yandex.ru/games/sdk/v2"></script>
+<script src="/sdk.js"></script>
 ```
 
 ```yaml
 dependencies:
   ...
-  flutter_yandex_games: 0.0.6
+  flutter_yandex_games: 0.0.7
 ```
 
 If you get 404 error for js files in your game after uploading to Yandex, remove

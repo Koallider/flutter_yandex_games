@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Added LoadingAPI and GameplayAPI features
+
 ## 0.0.6
 
 - Added methods to create a desktop shortcut
