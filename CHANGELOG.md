@@ -1,3 +1,8 @@
+## 0.0.8
+
+- Removed deprecated dart:js dependency. js_interop is now used instead.
+- Added onOpen callback for Fullscreen Ad
+
 ## 0.0.7
 
 - Added LoadingAPI and GameplayAPI features

@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    super.initState();
     initYandexGames();
   }
 
@@ -99,6 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void showFullscreenAd() {
     YandexGames.gameplayApi.stop();
     YandexGames.showFullscreenAd(
+      onOpen: () {
+        debugPrint("onOpen");
+        setState(() {
+          status = "Fullscreen Ad Opened";
+        });
+      },
       onClose: (wasShown) {
         YandexGames.gameplayApi.start();
         debugPrint("onClose: $wasShown");
@@ -205,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void showShortcutPrompt(){
-    YandexGames.canShowShortcutPrompt().then((value){
+    YandexGames.showShortcutPrompt().then((value){
       setState(() {
         status = "Prompt shown: $value";
       });

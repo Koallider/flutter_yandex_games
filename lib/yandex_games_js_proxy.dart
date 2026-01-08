@@ -1,28 +1,12 @@
-@JS()
 library yandexgames.js;
 
-import 'dart:js';
-import 'package:js/js.dart';
+import 'dart:js_interop';
 
-@JS("YaGames")
-class YaGamesJs {
-  external static Object init();
-}
+@JS('YaGames.init')
+external JSPromise<YaSdk> yaGamesInit();
 
-@JS("Player")
-class YaPlayer {
-  external String getUniqueID();
-
-  external void setData(JsObject data, bool flush);
-
-  external JsObject getData();
-
-  external String getMode();
-}
-
-@JS("YaSdk")
-class YaSdk {
-  external Object getPlayer(GetPlayerOptions options);
+extension type YaSdk._(JSObject _) implements JSObject {
+  external JSPromise<YaPlayer> getPlayer(GetPlayerOptions options);
 
   external YaAdv get adv;
 
@@ -37,53 +21,55 @@ class YaSdk {
   external Features get features;
 }
 
-@JS("Features")
-class Features {
-  external LoadingAPIImpl? get LoadingAPI;
-  external GameplayAPIImpl? get GameplayAPI;
+extension type YaPlayer._(JSObject _) implements JSObject {
+  external JSString getUniqueID();
+
+  external void setData(JSAny? data, bool flush);
+
+  external JSPromise<JSObject> getData();
+
+  external bool isAuthorized();
 }
 
-@JS("LoadingAPI")
-class LoadingAPIImpl {
+extension type LoadingAPIImpl._(JSObject _) implements JSObject {
   external void ready();
 }
 
-@JS("GameplayAPI")
-class GameplayAPIImpl {
+extension type GameplayAPIImpl._(JSObject _) implements JSObject {
   external void stop();
 
   external void start();
 }
 
-@JS("Auth")
-class YaAuth {
-  external JsObject openAuthDialog();
+extension type YaAuth._(JSObject _) implements JSObject {
+  external JSPromise<JSAny?> openAuthDialog();
 }
 
-@JS("Adv")
-class YaAdv {
+extension type YaAdv._(JSObject _) implements JSObject {
   external void showFullscreenAdv(ShowFullscreenAdOptions options);
 
   external void showRewardedVideo(ShowRewardedVideoOptions options);
 }
 
-@JS("Feedback")
-class YaFeedback {
-  external JsObject canReview();
+extension type YaFeedback._(JSObject _) implements JSObject {
+  external JSPromise<CanReviewResponse> canReview();
 
-  external JsObject requestReview();
+  external JSPromise<RequestReviewResponse> requestReview();
 }
 
-@JS()
-class Shortcut {
-  external JsObject canShowPrompt();
+extension type Shortcut._(JSObject _) implements JSObject {
+  external JSPromise<CanShowPromptResponse> canShowPrompt();
 
-  external JsObject showPrompt();
+  external JSPromise<ShowPromptResponse> showPrompt();
 }
 
-@anonymous
-@JS()
-class GetPlayerOptions {
+extension type Features._(JSObject _) implements JSObject {
+  external LoadingAPIImpl? get LoadingAPI;
+
+  external GameplayAPIImpl? get GameplayAPI;
+}
+
+extension type GetPlayerOptions._(JSObject _) implements JSObject {
   external bool get scopes;
 
   external factory GetPlayerOptions({bool scopes});
@@ -91,61 +77,63 @@ class GetPlayerOptions {
 
 @anonymous
 @JS()
+@staticInterop
 class ShowRewardedVideoOptions {
   external factory ShowRewardedVideoOptions({RewardedVideoCallbacks callbacks});
 }
 
 @anonymous
 @JS()
+@staticInterop
 class ShowFullscreenAdOptions {
   external factory ShowFullscreenAdOptions({FullscreenAdCallbacks callbacks});
 }
 
 @anonymous
 @JS()
+@staticInterop
 class RewardedVideoCallbacks {
   external factory RewardedVideoCallbacks(
-      {Function? onOpen,
-      Function? onRewarded,
-      Function? onClose,
-      Function? onError});
+      {JSFunction? onOpen,
+      JSFunction? onRewarded,
+      JSFunction? onClose,
+      JSFunction? onError});
 }
 
-@anonymous
 @JS()
+@anonymous
+@staticInterop
 class FullscreenAdCallbacks {
   external factory FullscreenAdCallbacks(
-      {Function? onClose, Function? onError});
+      {JSFunction? onOpen, JSFunction? onClose, JSFunction? onError});
 }
 
-@JS()
-class CanReviewResponse {
+extension type CanReviewResponse._(JSObject _) implements JSObject {
   external bool get value;
-  external String get reason;
+
+  external String? get reason;
 }
 
-@JS()
-class RequestReviewResponse {
+extension type RequestReviewResponse._(JSObject _) implements JSObject {
   external bool get feedbackSent;
 }
 
-@JS()
-class CanShowPromptResponse {
+extension type CanShowPromptResponse._(JSObject _) implements JSObject {
   external bool get canShow;
 }
 
-@JS()
-class ShowPromptResponse {
-  external String get outcome;
+extension type ShowPromptResponse._(JSObject _) implements JSObject {
+  external String? get outcome;
 }
 
 /// Environment variables
 ///
 /// More data https://yandex.ru/dev/games/doc/dg/sdk/sdk-environment.html
-@JS()
-class Environment {
+extension type Environment._(JSObject _) implements JSObject {
   external App get app;
+
   external Browser get browser;
+
   external Locale get i18n;
 
   /// Custom payload from the game URL.
@@ -155,8 +143,7 @@ class Environment {
 }
 
 /// Locale related environment variables
-@JS()
-class Locale {
+extension type Locale._(JSObject _) implements JSObject {
   /// Yandex games interface language in ISO 639-1 format.
   /// Use this property to localize your game.
   external String get lang;
@@ -168,15 +155,13 @@ class Locale {
 }
 
 /// App related environment variables
-@JS()
-class App {
+extension type App._(JSObject _) implements JSObject {
   /// Game ID
   external String get id;
 }
 
 /// Browser related environment variables
-@JS()
-class Browser {
+extension type Browser._(JSObject _) implements JSObject {
   /// Browser language in ISO 639-1 format
   external String get lang;
 }

@@ -1,0 +1,9 @@
+# Test configuration for flutter_yandex_games
+# 
+# Tags:
+#   - web: Tests that require the web platform (dart:js_interop)
+
+tags:
+  web:
+    description: Tests that require the web platform and dart:js_interop
+

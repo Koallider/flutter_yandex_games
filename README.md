@@ -22,16 +22,24 @@ Add this to your index.html
 ```yaml
 dependencies:
   ...
-  flutter_yandex_games: 0.0.7
+  flutter_yandex_games: 0.0.8
 ```
+
+## Build
+
+```bash
+flutter build web --no-web-resources-cdn --release
+```
+
+
+
+## Usage
 
 If you get 404 error for js files in your game after uploading to Yandex, remove
 ```html
 <base href="$FLUTTER_BASE_HREF">
 ```
 from your index.html
-
-## Usage
 
 ### Init Sdk
 
@@ -57,6 +65,9 @@ player.setData({"gold": 100});
 
 ```dart
 YandexGames.showFullscreenAd(
+  onOpen: (){
+    
+  },
   onClose: (wasShown){
     
   },

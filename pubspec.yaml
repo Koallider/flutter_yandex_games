@@ -1,6 +1,6 @@
 name: flutter_yandex_games
 description: Flutter Web plugin for Yandex Games Sdk. Show ad, save/load player data.
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/Koallider/flutter_yandex_games
 
 environment:
@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  js: ^0.6.7
 
 dev_dependencies:
   flutter_test:

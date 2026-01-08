@@ -1,15 +1,6 @@
-import 'dart:convert';
-import 'dart:js';
-
-///Wraps callbacks so they can be called from JS
-F? wrapCallback<F extends Function>(F? f) {
-  if (f != null) {
-    return allowInterop<F>(f);
-  }
-  return f;
-}
+import 'dart:js_interop';
 
 ///Converts JS object to Map
-Map mapify(JsObject obj) {
-  return jsonDecode(context['JSON'].callMethod('stringify', [obj]));
+Map<dynamic, dynamic> mapify(JSAny? obj) {
+  return obj.dartify() as Map<dynamic, dynamic>;
 }
